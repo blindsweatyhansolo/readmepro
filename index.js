@@ -78,14 +78,20 @@ const questions = () => {
             {
                 // installation instructions
                 name: 'install',
-                message: 'Please provide clear installation instructions for your project. (Required)',
+                message: 'Please provide clear project installation instructions(Required)',
                 validate: input => input ? true : 'You must provide installation instructions.'
             },
             {
                 // usage instructions, message to add more content later (out of scope)
                 name: 'usage',
-                message: 'Provide examples for use of your project. Recommended: add screenshots and live demos after completion. (Required)',
+                message: 'Provide examples of/for use of your project. Recommended: add screenshots and live demos after completion (Required)',
                 validate: input => input ? true : 'Please provide usage information.'
+            },
+            {
+                // testing instructions
+                name: 'test',
+                message: 'Please provide project testing instructions (Required)',
+                validate: input => input ? true : 'You must provide testing instructions.'
             },
             {
                 // confirm if there were any contributors
@@ -108,16 +114,31 @@ const questions = () => {
 // function writeToFile(fileName, data) {}
 
 // TODO: Create a function to initialize app
-// function init() {}
+// function to prompt questions, store user inputs as readmeData
 const init = () => {
     return questions()
     .then(readmeData => {
         return readmeData;
     })
-}
+};
 
 // Function call to initialize app
 init()
-    .then(readmeData => {
-        console.log(readmeData);
+.then(readmeData => {
+    console.log(readmeData);
+        // send readmeData to generateMarkdown
+        return generateMarkdown(readmeData);
     });
+
+        // // then send page data (pageMd) to writeFile
+        // .then(pageMd => {
+        //     return writeFile(pageMd);
+        // })
+        // // then log message from writeFileReponse (successful resolve message)
+        // .then(writeFileResponse => {
+        //     console.log(writeFileResponse.message);
+        // })
+        // // catch err
+        // .catch(err => {
+        //     console.log(err);
+        // });
