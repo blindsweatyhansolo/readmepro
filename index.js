@@ -4,11 +4,12 @@ const fs = require('fs');
 const generateMarkdown = require('./utils/generateMarkdown');
 
 // TODO: Create an array of questions for user input
+// const promptUser = () => {
 const questions = () => {
     console.log(`
-    ==========
-    ReadMe Pro
-    ==========
+    =====================
+    Welcome to ReadMe Pro
+    =====================
     `);
 
     return inquirer
@@ -28,12 +29,13 @@ const questions = () => {
                 name: 'confirmEmail',
                 message: 'Would you like to include your e-mail?',
                 // false will not render email to 'additional info' section
-                default: false
+                default: true
             },
             {
                 name: 'email',
                 message: 'What is your e-mail?',
-                validate: input => input ? true : 'Please enter your e-mail address.'
+                validate: input => input ? true : 'Please enter your e-mail address.',
+                when: ({ confirmEmail }) => confirmEmail
             },
 
             // prompts for project info
@@ -82,26 +84,56 @@ const questions = () => {
                 message: 'Provide examples for use of your project. Recommended: add screenshots and live demos after completion.',
                 validate: input => input ? true : 'Please provide usage information.'
             },
-            // {
-            //     // confirm if there were any contributors
-            //     type: 'confirm',
-            //     name: 'confirmContributors',
-            //     message: 'Did anyone else contribute to this project?',
-            //     // false will not render 'contributors' section 
-            //     default: true
-            // },
-            // {
-            //     name: 'contributors',
-            //     message: 'Please provide any contributors GitHub username:'
-            // },
         ])
 };
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+const promptContributors = contributorsArr => {
+    // create array for contributors
+    if (!contributorsArr.contributors){
+        contributorsArr.contributors = [];
+    }
 
-// TODO: Create a function to initialize app
-function init() {}
+    return inquirer
+        .prompt([
+            {
+                // confirm if there were any contributors
+                type: 'confirm',
+                name: 'confirmContributors',
+                message: 'Were there contributors to this project?',
+                // false will not render 'contributors' section 
+                default: true
+            },
+            {
+                name: 'contributors',
+                message: 'Please provide contributor GitHub username:',
+                when: ({ confirmContributors }) => confirmContributors
+            },
+            {
+                type: 'confirm',
+                name: 'confirmAddContributor',
+                message: 'Would you like to add another contributor?',
+                default: false
+            }
+        ])
+        .then(contributorsData => {
+            // place data from inquirer prompt into new contributors array
+            contributorsArr.contributors.push(contributorsData);
+            // recall promptContributors on true, otherwise return object data
+            if (contributorsData.confirmAddContributor){
+                return promptContributors(contributorsArr);
+            } else {
+                return contributorsArr;
+            }
+        })
+};
 
-// Function call to initialize app
-init();
+// // TODO: Create a function to write README file
+// function writeToFile(fileName, data) {}
+
+// // TODO: Create a function to initialize app
+// function init() {}
+
+// // Function call to initialize app
+// init();
+questions()
+    .then(promptContributors);
