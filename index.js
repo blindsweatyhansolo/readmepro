@@ -7,14 +7,17 @@ const generateMarkdown = require('./utils/generateMarkdown');
 // const promptUser = () => {
 const questions = () => {
     console.log(`
-    =====================
-    Welcome to ReadMe Pro
-    =====================
+        =====================
+        Welcome to ReadMe Pro
+        =====================
+    Thank you for using ReadMe Pro!
+    Please answer all required fields.
+    Your ReadMe file will be generated in the 'dist' folder.
     `);
 
     return inquirer
         .prompt([
-            // prompts for user github name, email (if confirmed)
+            // PROMPTS FOR USER INFO //
             {
                 // type is default input
                 // type: 'input',
@@ -38,7 +41,7 @@ const questions = () => {
                 when: ({ confirmEmail }) => confirmEmail
             },
 
-            // prompts for project info
+            // PROMPTS FOR PROJECT INFO //
             {
                 // title of project, used as readme title
                 name: 'title',
@@ -48,7 +51,7 @@ const questions = () => {
             {
                 // project description
                 name: 'description',
-                message: 'Provide a description for your project:',
+                message: 'Provide a description for your project (Required)',
                 validate: input => input ? true : 'A description must be provided.'
             },
             {
@@ -60,7 +63,7 @@ const questions = () => {
                 default: true
             },
             {
-                // this question only appears when confirmLicense is true
+                // this question only appears when: confirmLicense is true
                 type: 'checkbox',
                 name: 'license',
                 message: 'Which licenses does your project have? (Check all that apply)',
@@ -75,26 +78,15 @@ const questions = () => {
             {
                 // installation instructions
                 name: 'install',
-                message: 'Please provide clear installation instructions for your project.',
+                message: 'Please provide clear installation instructions for your project. (Required)',
                 validate: input => input ? true : 'You must provide installation instructions.'
             },
             {
                 // usage instructions, message to add more content later (out of scope)
                 name: 'usage',
-                message: 'Provide examples for use of your project. Recommended: add screenshots and live demos after completion.',
+                message: 'Provide examples for use of your project. Recommended: add screenshots and live demos after completion. (Required)',
                 validate: input => input ? true : 'Please provide usage information.'
             },
-        ])
-};
-
-const promptContributors = contributorsArr => {
-    // create array for contributors
-    if (!contributorsArr.contributors){
-        contributorsArr.contributors = [];
-    }
-
-    return inquirer
-        .prompt([
             {
                 // confirm if there were any contributors
                 type: 'confirm',
@@ -104,36 +96,28 @@ const promptContributors = contributorsArr => {
                 default: true
             },
             {
+                // contributors, separated by spaces
                 name: 'contributors',
-                message: 'Please provide contributor GitHub username:',
+                message: 'Please list any contributor GitHub usernames (separated by spaces):',
                 when: ({ confirmContributors }) => confirmContributors
-            },
-            {
-                type: 'confirm',
-                name: 'confirmAddContributor',
-                message: 'Would you like to add another contributor?',
-                default: false
             }
         ])
-        .then(contributorsData => {
-            // place data from inquirer prompt into new contributors array
-            contributorsArr.contributors.push(contributorsData);
-            // recall promptContributors on true, otherwise return object data
-            if (contributorsData.confirmAddContributor){
-                return promptContributors(contributorsArr);
-            } else {
-                return contributorsArr;
-            }
-        })
 };
 
-// // TODO: Create a function to write README file
+// TODO: Create a function to write README file
 // function writeToFile(fileName, data) {}
 
-// // TODO: Create a function to initialize app
+// TODO: Create a function to initialize app
 // function init() {}
+const init = () => {
+    return questions()
+    .then(readmeData => {
+        return readmeData;
+    })
+}
 
-// // Function call to initialize app
-// init();
-questions()
-    .then(promptContributors);
+// Function call to initialize app
+init()
+    .then(readmeData => {
+        console.log(readmeData);
+    });
