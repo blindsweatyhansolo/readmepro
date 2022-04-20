@@ -27,16 +27,16 @@ const renderLicenseLink = license => {
   // switch case for license links based on matching value, starts on new line (\n)
   switch(license) {
     case 'MIT': 
-      return `\n[${license}](https://opensource.org/licenses/MIT)`;
+      return `[${license}](https://opensource.org/licenses/MIT)`;
       break;
     case 'Apache 2.0':
-      return `\n[${license}](https://opensource.org/licenses/Apache-2.0)`;
+      return `[${license}](https://opensource.org/licenses/Apache-2.0)`;
       break;
     case 'GPLv3':
-      return `\n[${license}](https://spdx.org/licenses/GPL-3.0-or-later.html)`;
+      return `[${license}](https://spdx.org/licenses/GPL-3.0-or-later.html)`;
       break;
     case 'BSD-3':
-      return `\n[${license}](https://spdx.org/licenses/BSD-3-Clause.html)`;
+      return `[${license}](https://spdx.org/licenses/BSD-3-Clause.html)`;
       break;
     case 'none':
       return "";
@@ -53,16 +53,16 @@ const renderLicenseSection = license => {
 ## [License](#table-of-contents)
 
 ${renderLicenseBadge(license)}
-_This application is covered under the ${renderLicenseLink(license)} license, see link for more details._
+\n_This application is covered under the ${renderLicenseLink(license)} license, see link for more details._
     `
   } else {
     return "";
   }
 };
 
-
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
+  // template literals for markdown text
   return `
   # ${data.title}
   
@@ -76,7 +76,7 @@ function generateMarkdown(data) {
   * [Description](#description)
   * [Installation](#installation)
   * [Usage](#usage)
-  * [License](#license)
+  ${data.license === 'none' ? "" : "* [License](#license)"}
   * [Tests](#tests)
   * [Contributions](#contributions)
   * [Additional Information](#additional-information)
@@ -91,7 +91,7 @@ function generateMarkdown(data) {
   ${data.usage}
 
   _For more help on how to add screenshots or demos for usage examples, check out this useful tutorial:_
-  \n![Mark Down Tutorial](ttps://agea.github.io/tutorial.md/)
+  \n[Mark Down Tutorial](ttps://agea.github.io/tutorial.md/)
 
   ${renderLicenseSection(data.license)}
 
@@ -99,12 +99,13 @@ function generateMarkdown(data) {
   ${data.test}
 
   ## Contributions:
+  ${data.contributors}
 
   ## [Additional Information:](#table-of-contents)
   _If you have any questions about the application, or would like to become a contributor, please contact me using the information below:_
 
-  [GitHub](https://github.com/${data.github})
-  [Email](mailto:${data.email})
+  \n[GitHub](https://github.com/${data.github})
+  \n[Email](mailto:${data.email})
 `;
 };
 

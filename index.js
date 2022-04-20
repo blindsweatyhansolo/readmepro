@@ -60,24 +60,17 @@ const questions = () => {
                 ]
             },
             {
-                // ask to set "npm i inquirer" as the default install instructions
-                type: 'confirm',
-                name: 'defaultInstall',
-                message: 'Use the default installation instructions (npm i to install dependencies)?',
-                default: true
-            },
-            {
-                // input custom installation instructions if defaultInstall is false
+                // input custom installation instructions, defaults to 'npm i inquirer'
                 name: 'install',
-                message: 'Please provide custom installation instructions:',
-                validate: input => input ? true : 'Please provide installation instructions.',
-                when: ({ defaultInstall }) => !defaultInstall
+                message: 'Please provide installation instructions (default: npm i to install dependencies)',
+                default: 'npm i inquirer',
+                validate: input => input ? true : 'Please provide instructions',
             },
             {
                 // usage instructions, message to add more content later (out of scope)
                 name: 'usage',
                 message: 'Provide examples of/for use of your project. Recommended: add screenshots and live demos after completion (Required)',
-                validate: input => input ? true : 'Please provide usage information.'
+                validate: input => input ? true : 'Please provide some usage information.'
             },
             {
                 // testing instructions
@@ -86,6 +79,7 @@ const questions = () => {
                 validate: input => input ? true : 'You must provide testing instructions.'
             },
             {
+                // contribution guidelines
                 name: 'contributors',
                 message: 'Please include any contribution guidelines:',
                 validate: input => input ? true : 'You must include contribution guidelines.'
