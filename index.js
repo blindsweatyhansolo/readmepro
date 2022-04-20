@@ -3,6 +3,7 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const generateMarkdown = require('./utils/generateMarkdown');
 
+
 // TODO: Create an array of questions for user input
 // const promptUser = () => {
 const questions = () => {
@@ -26,19 +27,19 @@ const questions = () => {
                 // if input is true (not left blank), return turn, else run message
                 validate: input => input ? true : 'Please enter your GitHub username.'
             },
-            {
-                // confirm if user wants to include email info (privacy issue)
-                type: 'confirm',
-                name: 'confirmEmail',
-                message: 'Would you like to include your e-mail?',
-                // false will not render email to 'additional info' section
-                default: true
-            },
+            // {
+            //     // confirm if user wants to include email info (privacy issue)
+            //     type: 'confirm',
+            //     name: 'confirmEmail',
+            //     message: 'Would you like to include your e-mail?',
+            //     // false will not render email to 'additional info' section
+            //     default: true
+            // },
             {
                 name: 'email',
-                message: 'What is your e-mail?',
-                validate: input => input ? true : 'Please enter your e-mail address.',
-                when: ({ confirmEmail }) => confirmEmail
+                message: 'E=mail Address (Required):',
+                validate: input => input ? true : 'Please enter your e-mail address. You can always remove it later.',
+                // when: ({ confirmEmail }) => confirmEmail
             },
 
             // PROMPTS FOR PROJECT INFO //
@@ -54,26 +55,27 @@ const questions = () => {
                 message: 'Provide a description for your project (Required)',
                 validate: input => input ? true : 'A description must be provided.'
             },
-            {
-                // license confirmation, then checkbox to select possible licenses
-                type: 'confirm',
-                name: 'confirmLicense',
-                message: 'Would you like to include license information?',
-                // false will not render license badge or 'license info' section
-                default: true
-            },
+            // {
+            //     // license confirmation, then checkbox to select possible licenses
+            //     type: 'confirm',
+            //     name: 'confirmLicense',
+            //     message: 'Would you like to include license information?',
+            //     // false will not render license badge or 'license info' section
+            //     default: true
+            // },
             {
                 // this question only appears when: confirmLicense is true
-                type: 'checkbox',
+                type: 'list',
                 name: 'license',
-                message: 'Which licenses does your project have? (Check all that apply)',
+                message: 'Please select the license used for this project:',
                 choices: [
                     'MIT',
                     'Apache 2.0',
                     'GPLv3',
-                    'BSD-3-Clause'
+                    'BSD-3',
+                    'none'
                 ],
-                when: ({ confirmLicense }) => confirmLicense
+                // when: ({ confirmLicense }) => confirmLicense
             },
             {
                 // installation instructions
@@ -93,25 +95,43 @@ const questions = () => {
                 message: 'Please provide project testing instructions (Required)',
                 validate: input => input ? true : 'You must provide testing instructions.'
             },
-            {
-                // confirm if there were any contributors
-                type: 'confirm',
-                name: 'confirmContributors',
-                message: 'Were there contributors to this project?',
-                // false will not render 'contributors' section 
-                default: true
-            },
+            // {
+            //     // confirm if there were any contributors
+            //     type: 'confirm',
+            //     name: 'confirmContributors',
+            //     message: 'Were there contributors to this project?',
+            //     // false will not render 'contributors' section 
+            //     default: true
+            // },
             {
                 // contributors, separated by spaces
                 name: 'contributors',
-                message: 'Please list any contributor GitHub usernames (separated by spaces):',
-                when: ({ confirmContributors }) => confirmContributors
+                message: 'Please include any contribution guidelines:',
+                validate: input => input ? true : 'You must include contribution guidelines.'
+                // when: ({ confirmContributors }) => confirmContributors
             }
         ])
 };
 
 // TODO: Create a function to write README file
 // function writeToFile(fileName, data) {}
+const writeFile = fileContent => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile('./dist/readme.md', fileContent, err => {
+            // if error occurs, reject promise and send error to .catch method
+            if (err) {
+                reject(err);
+                // return out of function
+                return;
+            }
+            // on success, resolve Promise and send data to .then method
+            resolve({
+                ok: true,
+                message: 'Success! Check the dist folder for your generated readme file!'
+            })
+        })
+    })
+}
 
 // TODO: Create a function to initialize app
 // function to prompt questions, store user inputs as readmeData
@@ -124,21 +144,21 @@ const init = () => {
 
 // Function call to initialize app
 init()
-.then(readmeData => {
-    console.log(readmeData);
+    .then(readmeData => {
+        console.log(readmeData);
         // send readmeData to generateMarkdown
         return generateMarkdown(readmeData);
+    })
+    // then send page data (pageMd) to writeFile
+    .then(pageMd => {
+        return writeFile(pageMd);
+    })
+    // then log message from writeFileReponse (successful resolve message)
+    .then(writeFileResponse => {
+        console.log(writeFileResponse.message);
+    })
+    // catch err
+    .catch(err => {
+        console.log(err);
     });
-
-        // // then send page data (pageMd) to writeFile
-        // .then(pageMd => {
-        //     return writeFile(pageMd);
-        // })
-        // // then log message from writeFileReponse (successful resolve message)
-        // .then(writeFileResponse => {
-        //     console.log(writeFileResponse.message);
-        // })
-        // // catch err
-        // .catch(err => {
-        //     console.log(err);
-        // });
+    
