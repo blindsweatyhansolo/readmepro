@@ -98,7 +98,7 @@ function generateMarkdown(data) {
   ## [Tests:](#table-of-contents)
   ${data.test}
 
-  ## Contributions:
+  ## [Contributions:](#table-of-contents)
   ${data.contributors}
 
   ## [Additional Information:](#table-of-contents)

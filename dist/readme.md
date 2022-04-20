@@ -1,9 +1,10 @@
+
   # ReadMe Pro
   
   [![License: GPLv3](https://img.shields.io/badge/License-GPL3.0-red)](https://spdx.org/licenses/GPL-3.0-or-later.html)
 
   ## [Description:](#table-of-contents)
-  A simple CLI application for dynamically creating readme files
+  A simple CLI app for dynamically creating readme files for your next project
 
   ## Table of Contents
 
@@ -22,7 +23,7 @@
   ```
 
   ## [Usage:](#table-of-contents)
-  Demos to be recorded and included later
+  Demos to be added later
 
   _For more help on how to add screenshots or demos for usage examples, check out this useful tutorial:_
   
