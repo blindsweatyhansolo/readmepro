@@ -31,8 +31,10 @@
   ```
   node index.js
   ```
+  ![ReadMe Pro Live Demo](./demo/livedemo.gif)
 
-  ![ReadMe Pro Live Demo]()
+  Once completed, check the 'dist' folder for your new Readme!
+  ![Screenshot of finished Readme file](./demo/succesfullScreenShot.PNG)
 
   ## [Technologies:](#table-of-contents)
   Created using:
