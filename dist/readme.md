@@ -1,5 +1,5 @@
 
-  # test
+  # THIS
 
   ## Table of Contents
 
@@ -14,17 +14,15 @@
   ***  
 
   ## [Description:](#table-of-contents)
-  
-![badge](https://img.shields.io/badge/license-Apache 2.0-blue)
-    
+  [![License: BSD-3](https://img.shields.io/badge/License-BSD3-orange)](https://spdx.org/licenses/BSD-3-Clause.html)
 
-  tttttt
+  AGAIN
 
   ## [Installation:](#table-of-contents)
-  skdmfs
+  NO
 
   ## [Usage:](#table-of-contents)
-  sdfsd
+  OK
 
   _For more help on how to add screenshots or demos for usage examples, check out this useful tutorial:_
   [Mark Down Tutorial](ttps://agea.github.io/tutorial.md/)
@@ -33,16 +31,14 @@
 ## [License](#table-of-contents)
 
 _This application is covered under the following license, see link for more details:_
+[![License: BSD-3](https://img.shields.io/badge/License-BSD3-orange)](https://spdx.org/licenses/BSD-3-Clause.html)
 
-![badge](https://img.shields.io/badge/license-Apache 2.0-blue)
-    
-
-  [Apache 2.0](https://opensource.org/licenses/Apache-2.0)  
+  [BSD-3](https://spdx.org/licenses/BSD-3-Clause.html)
     
     
 
   ## [Tests:](#table-of-contents)
-  sdfsdf
+  SURE
 
   ***
 
@@ -51,7 +47,7 @@ _This application is covered under the following license, see link for more deta
   ## [Additional Information:](#table-of-contents)
   _If you have any questions about the application, or would like to become a contributor, please contact me using the information below:_
 
-  [GitHub](https://github.com/blindddd)
+  [GitHub](https://github.com/LETS)
 
-  [Email](mailto:g@g.com)
+  [Email](mailto:TRY)
 

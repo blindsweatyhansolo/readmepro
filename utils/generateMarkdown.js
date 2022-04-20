@@ -1,45 +1,47 @@
 // TODO: Create a function that returns a license badge based on which license is passed in
 // If there is no license, return an empty string
 const renderLicenseBadge = license => {
-  if (license !== 'none'){
-    return `
-![badge](https://img.shields.io/badge/license-${license}-blue)
-    `;
-  } else {
-    return '';
-  }
+  // switch case for grabbing license badge based on matching value
+  switch(license) {
+    case 'MIT': 
+      return `[![License: ${license}](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)`;
+      break;
+    case 'Apache 2.0':
+      return `[![License: ${license}](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)`;
+      break;
+    case 'GPLv3':
+      return `[![License: ${license}](https://img.shields.io/badge/License-GPL3.0-red)](https://spdx.org/licenses/GPL-3.0-or-later.html)`;
+      break;
+    case 'BSD-3':
+      return `[![License: ${license}](https://img.shields.io/badge/License-BSD3-orange)](https://spdx.org/licenses/BSD-3-Clause.html)`;
+      break;
+    case 'none':
+      return "";
+      break;
+  };
 };
 
 // // TODO: Create a function that returns the license link
 // // If there is no license, return an empty string
 const renderLicenseLink = license => {
-  if (license === "MIT"){
-    return `
-    [${license}](https://opensource.org/licenses/MIT)
-    `
-  }
-  
-  if (license === "Apache 2.0"){
-    return `
-  [${license}](https://opensource.org/licenses/Apache-2.0)  
-    `
-  }
-
-  if (license === "GPLv3"){
-    return `
-  [${license}](https://spdx.org/licenses/GPL-3.0-or-later.html)
-    `
-  }
-
-  if (license === "BSD-3"){
-    return `
-  [${license}](https://spdx.org/licenses/BSD-3-Clause.html)
-    `
-  }
-
-  if (license === 'none'){
-    return '';
-  }
+  // switch case for license links based on matching value, starts on new line (\n)
+  switch(license) {
+    case 'MIT': 
+      return `\n[${license}](https://opensource.org/licenses/MIT)`;
+      break;
+    case 'Apache 2.0':
+      return `\n[${license}](https://opensource.org/licenses/Apache-2.0)`;
+      break;
+    case 'GPLv3':
+      return `\n[${license}](https://spdx.org/licenses/GPL-3.0-or-later.html)`;
+      break;
+    case 'BSD-3':
+      return `\n[${license}](https://spdx.org/licenses/BSD-3-Clause.html)`;
+      break;
+    case 'none':
+      return "";
+      break;
+  };
 };
 
 // // TODO: Create a function that returns the license section of README
@@ -50,9 +52,9 @@ const renderLicenseSection = license => {
     return `
 ## [License](#table-of-contents)
 
-_This application is covered under the following license, see link for more details:_
 ${renderLicenseBadge(license)}
-${renderLicenseLink(license)}
+_This application is covered under the ${renderLicenseLink(license)} license, see link for more details._
+
     `
   } else {
     return '';
