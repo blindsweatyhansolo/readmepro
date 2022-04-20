@@ -54,10 +54,9 @@ const renderLicenseSection = license => {
 
 ${renderLicenseBadge(license)}
 _This application is covered under the ${renderLicenseLink(license)} license, see link for more details._
-
     `
   } else {
-    return '';
+    return "";
   }
 };
 
@@ -66,6 +65,11 @@ _This application is covered under the ${renderLicenseLink(license)} license, se
 function generateMarkdown(data) {
   return `
   # ${data.title}
+  
+  ${renderLicenseBadge(data.license)}
+
+  ## [Description:](#table-of-contents)
+  ${data.description}
 
   ## Table of Contents
 
@@ -76,29 +80,23 @@ function generateMarkdown(data) {
   * [Tests](#tests)
   * [Contributions](#contributions)
   * [Additional Information](#additional-information)
- 
-  ***  
-
-  ## [Description:](#table-of-contents)
-  ${renderLicenseBadge(data.license)}
-
-  ${data.description}
 
   ## [Installation:](#table-of-contents)
+  To install the required dependencies, run the following command:
+  \`\`\`
   ${data.install}
+  \`\`\`
 
   ## [Usage:](#table-of-contents)
   ${data.usage}
 
   _For more help on how to add screenshots or demos for usage examples, check out this useful tutorial:_
-  [Mark Down Tutorial](ttps://agea.github.io/tutorial.md/)
+  \n![Mark Down Tutorial](ttps://agea.github.io/tutorial.md/)
 
   ${renderLicenseSection(data.license)}
 
   ## [Tests:](#table-of-contents)
   ${data.test}
-
-  ***
 
   ## Contributions:
 
@@ -106,9 +104,7 @@ function generateMarkdown(data) {
   _If you have any questions about the application, or would like to become a contributor, please contact me using the information below:_
 
   [GitHub](https://github.com/${data.github})
-
   [Email](mailto:${data.email})
-
 `;
 };
 

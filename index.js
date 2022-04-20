@@ -5,8 +5,8 @@ const generateMarkdown = require('./utils/generateMarkdown');
 
 
 // TODO: Create an array of questions for user input
-// const promptUser = () => {
 const questions = () => {
+    // banner message
     console.log(`
         =====================
         Welcome to ReadMe Pro
@@ -20,26 +20,17 @@ const questions = () => {
         .prompt([
             // PROMPTS FOR USER INFO //
             {
-                // type is default input
+                // input default type is input
                 // type: 'input',
                 name: 'github',
                 message: 'GitHub Username (Required):',
                 // if input is true (not left blank), return turn, else run message
                 validate: input => input ? true : 'Please enter your GitHub username.'
             },
-            // {
-            //     // confirm if user wants to include email info (privacy issue)
-            //     type: 'confirm',
-            //     name: 'confirmEmail',
-            //     message: 'Would you like to include your e-mail?',
-            //     // false will not render email to 'additional info' section
-            //     default: true
-            // },
             {
                 name: 'email',
                 message: 'E=mail Address (Required):',
                 validate: input => input ? true : 'Please enter your e-mail address. You can always remove it later.',
-                // when: ({ confirmEmail }) => confirmEmail
             },
 
             // PROMPTS FOR PROJECT INFO //
@@ -55,14 +46,6 @@ const questions = () => {
                 message: 'Provide a description for your project (Required)',
                 validate: input => input ? true : 'A description must be provided.'
             },
-            // {
-            //     // license confirmation, then checkbox to select possible licenses
-            //     type: 'confirm',
-            //     name: 'confirmLicense',
-            //     message: 'Would you like to include license information?',
-            //     // false will not render license badge or 'license info' section
-            //     default: true
-            // },
             {
                 // this question only appears when: confirmLicense is true
                 type: 'list',
@@ -74,14 +57,21 @@ const questions = () => {
                     'GPLv3',
                     'BSD-3',
                     'none'
-                ],
-                // when: ({ confirmLicense }) => confirmLicense
+                ]
             },
             {
-                // installation instructions
+                // ask to set "npm i inquirer" as the default install instructions
+                type: 'confirm',
+                name: 'defaultInstall',
+                message: 'Use the default installation instructions (npm i to install dependencies)?',
+                default: true
+            },
+            {
+                // input custom installation instructions if defaultInstall is false
                 name: 'install',
-                message: 'Please provide clear project installation instructions(Required)',
-                validate: input => input ? true : 'You must provide installation instructions.'
+                message: 'Please provide custom installation instructions:',
+                validate: input => input ? true : 'Please provide installation instructions.',
+                when: ({ defaultInstall }) => !defaultInstall
             },
             {
                 // usage instructions, message to add more content later (out of scope)
@@ -95,20 +85,10 @@ const questions = () => {
                 message: 'Please provide project testing instructions (Required)',
                 validate: input => input ? true : 'You must provide testing instructions.'
             },
-            // {
-            //     // confirm if there were any contributors
-            //     type: 'confirm',
-            //     name: 'confirmContributors',
-            //     message: 'Were there contributors to this project?',
-            //     // false will not render 'contributors' section 
-            //     default: true
-            // },
             {
-                // contributors, separated by spaces
                 name: 'contributors',
                 message: 'Please include any contribution guidelines:',
                 validate: input => input ? true : 'You must include contribution guidelines.'
-                // when: ({ confirmContributors }) => confirmContributors
             }
         ])
 };
@@ -145,7 +125,7 @@ const init = () => {
 // Function call to initialize app
 init()
     .then(readmeData => {
-        console.log(readmeData);
+        // console.log(readmeData);
         // send readmeData to generateMarkdown
         return generateMarkdown(readmeData);
     })
@@ -157,7 +137,7 @@ init()
     .then(writeFileResponse => {
         console.log(writeFileResponse.message);
     })
-    // catch err
+    // catch errors
     .catch(err => {
         console.log(err);
     });
