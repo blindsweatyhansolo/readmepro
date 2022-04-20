@@ -35,7 +35,7 @@
 
   Once completed, check the 'dist' folder for your new Readme!
   
-  ![Screenshot of finished Readme file](./demo/succesfullScreenShot.PNG)
+  ![Finished Readme file](./demo/livedemosuccess.gif)
 
   ## [Technologies:](#table-of-contents)
   Created using:
